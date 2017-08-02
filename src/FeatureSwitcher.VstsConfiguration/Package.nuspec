@@ -3,7 +3,7 @@
   <metadata>
     <id>FeatureSwitcher.VstsConfiguration</id>
 	  <title>VSTS Configuration plugin for FeatureSwitcher</title>
-    <version>$version$</version>
+    <version>1.0.0</version>
     <authors>Michael Kaufmann</authors>
     <owners>Alegri International Service GmbH</owners>
     <licenseUrl>https://github.com/AlegriGroup/FeatureSwitcher.VstsConfiguration/blob/master/LICENSE</licenseUrl>
