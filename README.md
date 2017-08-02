@@ -33,7 +33,7 @@ Feature<MyDemoFeature>.Is().Enabled
 
 The code will create a WorkItem of the type task by default and add a tag "FeatureFlag". The title of the task 
 will comtain the name of your feature (depending on your naming conventions). The value is stored in the description field.  
-![default workitem](img\DefaultTask.png)
+![default workitem](img/DefaultTask.png)
 
 5.	Enter 'true' in the description field and save the WorkItem. Your feature flag is turned on now.
 
@@ -98,4 +98,4 @@ Features.Are.ConfiguredBy
     .VstsConfig().WithSettings(settings);
 ````
 
-![default workitem](img\CustomWorkItemType.png)
+![default workitem](img/CustomWorkItemType.png)
