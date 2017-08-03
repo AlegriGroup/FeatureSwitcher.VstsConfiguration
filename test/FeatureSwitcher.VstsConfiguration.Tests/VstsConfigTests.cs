@@ -26,7 +26,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
             var sut = new VstsConfig(new VstsSettings(), clientMock.Object);
 
-            sut.SetupAsync().Wait();
+            sut.SetupAsync().GetAwaiter().GetResult();
 
             sut.Cache.Count.Should().Be(2);
         }
@@ -52,7 +52,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
 
             var sut = new VstsConfig(new VstsSettings(), clientMock.Object);
-            sut.SetupAsync().Wait();
+            sut.SetupAsync().GetAwaiter().GetResult();
 
             Feature.Name feature1 = new Feature.Name(typeof(Feature1), "Feature1");
             Feature.Name feature2 = new Feature.Name(typeof(Feature2), "Feature2");
@@ -74,7 +74,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
 
             var sut = new VstsConfig(new VstsSettings(), clientMock.Object);
-            sut.SetupAsync().Wait();
+            sut.SetupAsync().GetAwaiter().GetResult();
 
             Feature.Name feature2 = new Feature.Name(typeof(Feature2), "Feature2");
 

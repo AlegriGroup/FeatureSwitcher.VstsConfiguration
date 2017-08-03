@@ -67,7 +67,7 @@ namespace FeatureSwitcher.VstsConfiguration
 
             if (_cache.Count == 0 && DateTime.UtcNow > _cacheTimeout)
             {
-                SetupAsync().Wait();
+                SetupAsync().GetAwaiter().GetResult();
             }
 
             if (!_cache.ContainsKey(feature.Value))
@@ -94,8 +94,7 @@ namespace FeatureSwitcher.VstsConfiguration
 #pragma warning disable S1481 // Unused local variables should be removed
 
             // fire and forget
-            //var t = CreateFeatureFlag(name, defaultValue);
-            CreateFeatureFlag(name, defaultValue).Wait();
+            var t = CreateFeatureFlag(name, defaultValue);
 
 #pragma warning restore S1481 // Unused local variables should be removed
 
