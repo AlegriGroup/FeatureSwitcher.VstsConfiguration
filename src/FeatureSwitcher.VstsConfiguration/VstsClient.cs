@@ -28,8 +28,9 @@ namespace FeatureSwitcher.VstsConfiguration
             if (projectUrl.LocalPath == "/")
                 throw new ArgumentException("Invalid URL: The URL must have the format: 'https://<account>.visualstudio.com/<project>'.", "projectUrl");
 
-            _projectName = projectUrl.LocalPath.Trim('/');
-            var baseUrl = new Uri($"{projectUrl.Scheme}://{projectUrl.DnsSafeHost}");
+            var urlWrapper = new UrlWrapper(projectUrl);
+            _projectName = urlWrapper.ProjectName;
+            var baseUrl = urlWrapper.ProjectCollectionUri;
 
             _settings = settings;
 
