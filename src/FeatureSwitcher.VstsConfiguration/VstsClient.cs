@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Services.Client;
 
 namespace FeatureSwitcher.VstsConfiguration
 {
@@ -22,9 +23,6 @@ namespace FeatureSwitcher.VstsConfiguration
             if (projectUrl == null)
                 throw new ArgumentNullException("projectUrl");
 
-            if (string.IsNullOrEmpty(pat))
-                throw new ArgumentNullException("pat");
-
             if (projectUrl.LocalPath == "/")
                 throw new ArgumentException("Invalid URL: The URL must have the format: 'https://<account>.visualstudio.com/<project>'.", "projectUrl");
 
@@ -34,25 +32,27 @@ namespace FeatureSwitcher.VstsConfiguration
 
             _settings = settings;
 
-            var patCreds = new VssBasicCredential(string.Empty, pat);
-            var connection = new VssConnection(baseUrl, patCreds);
+            VssCredentials credentials = string.IsNullOrEmpty(pat) 
+                ? credentials = new VssClientCredentials() 
+                : new VssBasicCredential(string.Empty, pat);
 
+            var connection = new VssConnection(baseUrl, credentials);
             _client = connection.GetClient<WorkItemTrackingHttpClient>();
         }
 
-        public VstsClient(Uri projectUrl, string pat) 
+        public VstsClient(Uri projectUrl, string pat)
             : this(projectUrl, pat, new VstsSettings())
         {
         }
 
-        public VstsClient(VstsSettings settings) 
+        public VstsClient(VstsSettings settings)
             : this(settings.Url, settings.PrivateAccessToken, settings)
         {
         }
 
         internal WorkItemTrackingHttpClient WorkItemTrackingHttpClient => _client;
 
-        public async Task<IDictionary<string,string>> GetAsync()
+        public async Task<IDictionary<string, string>> GetAsync()
         {
             var query = new Wiql
             {
@@ -70,7 +70,7 @@ namespace FeatureSwitcher.VstsConfiguration
             if (!result.WorkItems.Any())
                 return new Dictionary<string, string>();
 
-            var fields = new string[] 
+            var fields = new string[]
             {
                 "System.Id",
                 _settings.NameField,
@@ -81,10 +81,10 @@ namespace FeatureSwitcher.VstsConfiguration
 
             return workItems
                 .Select(x => new
-            {
-                key =x.Fields[_settings.NameField].ToString(),
-                value =x.Fields[_settings.ValueField].ToString()
-            })
+                {
+                    key = x.Fields[_settings.NameField].ToString(),
+                    value = x.Fields[_settings.ValueField].ToString()
+                })
             .AsEnumerable()
             .ToDictionary(p => p.key, p => p.value);
         }
