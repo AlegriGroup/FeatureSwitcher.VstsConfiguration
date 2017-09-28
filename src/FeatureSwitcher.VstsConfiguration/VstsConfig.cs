@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FeatureSwitcher.VstsConfiguration
@@ -48,9 +49,13 @@ namespace FeatureSwitcher.VstsConfiguration
             foreach (var feature in features)
             {
                 bool? value = null;
-                if (bool.TryParse(feature.Value, out var x))
+                if (bool.TryParse(Strip(feature.Value), out var x))
                 {
                     value = x;
+                }
+                else
+                {
+                    throw new InvalidOperationException($"The value '{feature.Value}' in featuer flag '{feature.Key}' cannot be converted to a boolean value.");
                 }
 
                 _cache[feature.Key] = value;
@@ -59,13 +64,19 @@ namespace FeatureSwitcher.VstsConfiguration
             _cacheTimeout = DateTime.UtcNow.Add(_settings.CacheTimeout);
         }
 
+        // In TFS there might be html tags in the value.
+        private string Strip(string input)
+        {
+            return Regex.Replace(input, "<.*?>", string.Empty); // input.Trim("<p>".ToCharArray()).TrimEnd("</p>".ToCharArray());
+        }
+
 
         public bool? IsEnabled(Feature.Name feature)
         {
             if (feature == null)
                 return null;
 
-            if (_cache.Count == 0 && DateTime.UtcNow > _cacheTimeout)
+            if (_cache.Count == 0 || DateTime.UtcNow > _cacheTimeout)
             {
                 SetupAsync().GetAwaiter().GetResult();
             }
