@@ -20,12 +20,13 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
             act.ShouldThrow<ArgumentNullException>();
 
+            // an empty pat results in an interactive authentication
             act = () =>
             {
                 new VstsClient(new Uri("http://localhost"), null);
             };
 
-            act.ShouldThrow<ArgumentNullException>();
+            act.ShouldNotThrow<ArgumentNullException>();
 
             act = () =>
             {

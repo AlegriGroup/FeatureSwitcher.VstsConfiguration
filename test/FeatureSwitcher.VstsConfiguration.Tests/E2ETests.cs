@@ -38,13 +38,13 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             state.Should().BeFalse();
         }
 
+        [Ignore]
         [TestMethod]
         [TestCategory("Integration")]
         public void EndToEnd_gets_the_correct_flag_for_environment()
         {
             var environmentKey = Guid.NewGuid().ToString();
 
-            
             var testSettings = new VstsSettings();
             testSettings.AddEnvironment(environmentKey);
 
