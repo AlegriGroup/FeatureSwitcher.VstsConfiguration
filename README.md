@@ -23,6 +23,8 @@ Features.Are.ConfiguredBy
     .WithVSTSUrl(new Uri("http://youraccount.visualstudio.com/yourproject"))
     .WithPrivateAccessToken("Your PAT token");
 ````
+> ***Note: This is just an example. You should never hardcode your PAT. Limit the access for the PAT to "Work items (read)" - or "Work items (read and write)" if you want to use the auto create feature - and store the token in a save place.***
+
 Click [here](https://www.visualstudio.com/en-us/docs/setup-admin/team-services/use-personal-access-tokens-to-authenticate) if you need help 
 how to create a private access token (PAT)
 
