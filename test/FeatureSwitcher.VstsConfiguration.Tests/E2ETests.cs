@@ -38,7 +38,6 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             state.Should().BeFalse();
         }
 
-        [Ignore]
         [TestMethod]
         [TestCategory("Integration")]
         public void EndToEnd_gets_the_correct_flag_for_environment()
@@ -64,13 +63,13 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
                 .WithVSTSUrl(Settings.Default.Url)
                 .WithPrivateAccessToken(IntegrationTests.GetPAT())
                 .WithEnvironment(environmentKey)
-                .WithCacheTimeout(TimeSpan.FromMilliseconds(100))
+                .WithCacheTimeout(TimeSpan.FromMilliseconds(1))
                 .PreloadedFeatures()
                 .GetAwaiter().GetResult();
 
 
 
-            Feature<Demo.DemoFeature>.Is().Enabled.Should().BeTrue();
+            Feature<Demo.DemoFeature>.Is().Enabled.Should().BeTrue("The default flag should be false.");
 
             // turn off the feature
             var doc = new JsonPatchDocument();
@@ -84,16 +83,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var t = testClient.WorkItemTrackingHttpClient.UpdateWorkItemAsync(doc, id);
             t.GetAwaiter().GetResult();
 
-            // give the cache time to expire
-            Thread.Sleep(100);
-
-            // get value from cache
-            Feature<Demo.DemoFeature>.Is().Enabled.Should().BeTrue();
-
-            // give the operation in the background time to finish
-            Thread.Sleep(2000);
-
-            Feature<Demo.DemoFeature>.Is().Enabled.Should().BeFalse();
+            Feature<Demo.DemoFeature>.Is().Enabled.Should().BeFalse("The feature was turned off.");
 
             testClient.WorkItemTrackingHttpClient.DeleteWorkItemAsync(id, destroy: true);
         }
