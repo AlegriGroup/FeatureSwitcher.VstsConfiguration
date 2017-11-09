@@ -127,6 +127,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ConfigureVstsTests.cs" />
+    <Compile Include="UrlWrapperTests.cs" />
     <Compile Include="VstsClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VstsConfigTests.cs" />

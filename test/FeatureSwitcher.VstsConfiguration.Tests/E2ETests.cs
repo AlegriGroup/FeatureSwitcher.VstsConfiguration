@@ -29,7 +29,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
                 .WithPrivateAccessToken(IntegrationTests.GetPAT())
                 .WithEnvironment(environmentKey)
                 .PreloadedFeatures()
-                .Wait();
+                .GetAwaiter().GetResult();
 
             // the flag should not exist and is created for the new environment
             var state = Feature<Demo.DemoFeature>.Is().Enabled;
@@ -38,19 +38,19 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             state.Should().BeFalse();
         }
 
+        [Ignore]
         [TestMethod]
         [TestCategory("Integration")]
         public void EndToEnd_gets_the_correct_flag_for_environment()
         {
             var environmentKey = Guid.NewGuid().ToString();
 
-            
             var testSettings = new VstsSettings();
             testSettings.AddEnvironment(environmentKey);
 
             var testClient = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), testSettings);
             var task = testClient.PutAsync("Demo.DemoFeature", "True");
-            task.Wait();
+            task.GetAwaiter().GetResult();;
 
             var id = task.Result.Id;
 
@@ -66,7 +66,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
                 .WithEnvironment(environmentKey)
                 .WithCacheTimeout(TimeSpan.FromMilliseconds(100))
                 .PreloadedFeatures()
-                .Wait();
+                .GetAwaiter().GetResult();
 
 
 
@@ -82,7 +82,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             });
 
             var t = testClient.WorkItemTrackingHttpClient.UpdateWorkItemAsync(doc, id);
-            t.Wait();
+            t.GetAwaiter().GetResult();
 
             // give the cache time to expire
             Thread.Sleep(100);

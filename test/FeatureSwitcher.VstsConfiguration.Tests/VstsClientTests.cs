@@ -20,12 +20,13 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
             act.ShouldThrow<ArgumentNullException>();
 
+            // an empty pat results in an interactive authentication
             act = () =>
             {
                 new VstsClient(new Uri("http://localhost"), null);
             };
 
-            act.ShouldThrow<ArgumentNullException>();
+            act.ShouldNotThrow<ArgumentNullException>();
 
             act = () =>
             {
@@ -42,7 +43,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT());
 
             var task = sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true");
-            task.Wait();
+            task.GetAwaiter().GetResult();
 
 
             var result = task.Result;
@@ -69,7 +70,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), config);
 
             var task = sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true");
-            task.Wait();
+            task.GetAwaiter().GetResult();;
 
 
             var result = task.Result;
@@ -90,10 +91,10 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), settings);
 
             // make sure on eitem exists
-            sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true").Wait();
+            sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true").GetAwaiter().GetResult();
 
             var task = sut.GetAsync();
-            task.Wait();
+            task.GetAwaiter().GetResult();;
 
 
             var result = task.Result;
@@ -112,7 +113,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), settings);
 
             var task = sut.GetAsync();
-            task.Wait();
+            task.GetAwaiter().GetResult();;
 
 
             var result = task.Result;
@@ -135,7 +136,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), config);
 
             var task = sut.GetAsync();
-            task.Wait();
+            task.GetAwaiter().GetResult();;
 
 
             var result = task.Result;

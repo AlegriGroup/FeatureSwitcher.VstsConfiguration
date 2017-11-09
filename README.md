@@ -23,6 +23,8 @@ Features.Are.ConfiguredBy
     .WithVSTSUrl(new Uri("http://youraccount.visualstudio.com/yourproject"))
     .WithPrivateAccessToken("Your PAT token");
 ````
+> ***Note: This is just an example. You should never hardcode your PAT. Limit the access for the PAT to "Work items (read)" - or "Work items (read and write)" if you want to use the auto create feature - and store the token in a save place.***
+
 Click [here](https://www.visualstudio.com/en-us/docs/setup-admin/team-services/use-personal-access-tokens-to-authenticate) if you need help 
 how to create a private access token (PAT)
 
@@ -32,7 +34,7 @@ Feature<MyDemoFeature>.Is().Enabled
 ````
 
 The code will create a WorkItem of the type task by default and add a tag "FeatureFlag". The title of the task 
-will comtain the name of your feature (depending on your naming conventions). The value is stored in the description field.  
+will contain the name of your feature (depending on your naming conventions). The value is stored in the description field.  
 ![default workitem](img/DefaultTask.png)
 
 5.	Enter 'true' in the description field and save the WorkItem. Your feature flag is turned on now.
@@ -60,8 +62,9 @@ the test project.
 
 # Advanced concepts
 ## Environments
-The solution supports the concept of environments. The environment is added as a sperate tag to the WorkItem and alows multiple 
-flags with the same name (normally it must be unique). Lke this you can use the flag in Dev, Test, QA and Prod with differet values.
+The solution supports the concept of environments. The environment is added as a separate tag to the WorkItem and 
+allows multiple flags with the same name (normally it must be unique). Like this you can use the flag in Dev, Test, QA and Prod with different values.
+
 
 ````csharp
 Features.Are.ConfiguredBy
@@ -72,7 +75,7 @@ Features.Are.ConfiguredBy
 ````
 ## Customize WorkItems and Queries
 You can customize how the FeatureFlags are stored in VSTS. You can specify your own WorkItemType, the fields and the query that is 
-used to retieve them.
+used to retrieve them.
 
 For example: you can create a new workitemtype called "FeatureFlag" and add fields to store the name and the value of the flag. 
 You can add additional fields like priority and additional tags and expand the query to filter workitems based on these values.
