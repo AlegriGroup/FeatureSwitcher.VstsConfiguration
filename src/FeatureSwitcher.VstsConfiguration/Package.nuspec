@@ -3,7 +3,7 @@
   <metadata>
     <id>FeatureSwitcher.VstsConfiguration</id>
 	  <title>VSTS Configuration plugin for FeatureSwitcher</title>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <authors>Michael Kaufmann</authors>
     <owners>Alegri International Service GmbH</owners>
     <licenseUrl>https://github.com/AlegriGroup/FeatureSwitcher.VstsConfiguration/blob/master/LICENSE</licenseUrl>
@@ -12,6 +12,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>VSTS Configuration plugin for FeatureSwitcher</description>
 	  <tags>FeatureSwitcher FeatureToggle Configuration</tags>
+    <releaseNotes>
+      - Added support for on prem TFS (with SSL)
+      - Strip HTMl from values from description field.
+    </releaseNotes>
     <dependencies>
       <dependency id="FeatureSwitcher" version="1.1.0" />
     </dependencies>
