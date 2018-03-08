@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using FeatureSwitcher.VstsConfiguration;
 
 namespace FeatureSwitcher.VstsConfiguration.Tests
 {

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{655C0759-F1A1-4151-8ED1-F899CD4E6FFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeatureSwitcher.VstsConfiguration", "src\FeatureSwitcher.VstsConfiguration\FeatureSwitcher.VstsConfiguration.csproj", "{BA9392FC-FB58-45CA-9142-BD77BB26F21C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeatureSwitcher.VstsConfiguration", "src\FeatureSwitcher.VstsConfiguration\FeatureSwitcher.VstsConfiguration.csproj", "{BA9392FC-FB58-45CA-9142-BD77BB26F21C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{9ED1D5C1-875C-4481-8654-480D21044D89}"
 	ProjectSection(SolutionItems) = preProject
@@ -35,5 +35,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BA9392FC-FB58-45CA-9142-BD77BB26F21C} = {655C0759-F1A1-4151-8ED1-F899CD4E6FFC}
 		{74A8EF5E-BC41-4D14-B6CB-B519FC24EA9A} = {9ED1D5C1-875C-4481-8654-480D21044D89}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88F3FB01-4872-40AB-8F5E-5D2161798420}
 	EndGlobalSection
 EndGlobal

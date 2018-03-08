@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.Services.Client;
 
 namespace FeatureSwitcher.VstsConfiguration
 {
@@ -23,6 +22,9 @@ namespace FeatureSwitcher.VstsConfiguration
             if (projectUrl == null)
                 throw new ArgumentNullException("projectUrl");
 
+            if (pat == null)
+                throw new ArgumentNullException("pat");
+
             if (projectUrl.LocalPath == "/")
                 throw new ArgumentException("Invalid URL: The URL must have the format: 'https://<account>.visualstudio.com/<project>'.", "projectUrl");
 
@@ -32,9 +34,7 @@ namespace FeatureSwitcher.VstsConfiguration
 
             _settings = settings;
 
-            VssCredentials credentials = string.IsNullOrEmpty(pat) 
-                ? credentials = new VssClientCredentials() 
-                : new VssBasicCredential(string.Empty, pat);
+            VssCredentials credentials = new VssBasicCredential(string.Empty, pat);
 
             var connection = new VssConnection(baseUrl, credentials);
             _client = connection.GetClient<WorkItemTrackingHttpClient>();
@@ -50,7 +50,7 @@ namespace FeatureSwitcher.VstsConfiguration
         {
         }
 
-        internal WorkItemTrackingHttpClient WorkItemTrackingHttpClient => _client;
+        public WorkItemTrackingHttpClient WorkItemTrackingHttpClient => _client;
 
         public async Task<IDictionary<string, string>> GetAsync()
         {
