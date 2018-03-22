@@ -12,10 +12,20 @@
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="FeatureSwitcher" Version="2.1.0" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="15.131.0-preview" />
+    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="15.131.0-preview" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\FeatureSwitcher.VstsConfiguration\FeatureSwitcher.VstsConfiguration.csproj" />
+    <ProjectReference Include="..\..\src\FeatureSwitcher.VstsConfiguration\FeatureSwitcher.VstsConfiguration.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="pat.secret">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

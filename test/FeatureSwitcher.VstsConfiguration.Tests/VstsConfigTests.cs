@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using FluentAssertions;
+using FeatureSwitcher.VstsConfiguration;
 
 namespace FeatureSwitcher.VstsConfiguration.Tests
 {
