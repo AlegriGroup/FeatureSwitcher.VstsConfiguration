@@ -25,7 +25,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
             var actual = ((ConfigureVsts)result).Settings;
 
-            actual.ShouldBeEquivalentTo(expected);
+            actual.Should().BeEquivalentTo(expected);
         }
 
         [TestMethod]
