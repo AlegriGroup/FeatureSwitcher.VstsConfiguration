@@ -1,6 +1,5 @@
 ﻿using FeatureSwitcher;
 using FeatureSwitcher.Configuration;
-using FeatureSwitcher.VstsConfiguration.Tests.Properties;
 using FluentAssertions;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

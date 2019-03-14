@@ -1,7 +1,6 @@
-﻿using System;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using FluentAssertions;
+using System;
 using System.Linq;
 
 namespace FeatureSwitcher.VstsConfiguration.Tests

@@ -11,9 +11,6 @@
       <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Properties\" />
-    </ItemGroup>
-    <ItemGroup>
       <ProjectReference Include="..\..\src\FeatureSwitcher.VstsConfiguration\FeatureSwitcher.VstsConfiguration.csproj" />
     </ItemGroup>
 </Project>
