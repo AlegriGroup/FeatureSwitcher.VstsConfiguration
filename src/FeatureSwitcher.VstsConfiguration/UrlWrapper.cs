@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace FeatureSwitcher.VstsConfiguration
 {
-    internal class UrlWrapper
+    public class UrlWrapper
     {
         readonly Uri _input;
 

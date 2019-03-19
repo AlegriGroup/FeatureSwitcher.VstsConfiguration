@@ -1,8 +1,6 @@
-﻿using System;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using FluentAssertions;
-using FeatureSwitcher.VstsConfiguration.Tests.Properties;
+using System;
 using System.Linq;
 
 namespace FeatureSwitcher.VstsConfiguration.Tests
@@ -13,34 +11,33 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
         [TestMethod]
         public void VstsClient_validates_input()
         {
-            Action act = () => 
+            Action act = () =>
             {
                 new VstsClient(null, "***");
             };
 
             act.Should().Throw<ArgumentNullException>();
 
-            // an empty pat results in an interactive authentication
             act = () =>
             {
                 new VstsClient(new Uri("http://localhost"), null);
             };
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentNullException>();
 
             act = () =>
             {
                 new VstsClient(new Uri("http://localhost"), "***");
             };
 
-            act.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>().WithMessage("Invalid URL: The URL must have the format: 'https://<account>.visualstudio.com/<project>'.*");
         }
 
         [TestMethod]
         [TestCategory("Integration")]
         public void VstsClient_can_create_feature_with_default_config()
         {
-            var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT());
+            var sut = new VstsClient(Settings.Url, IntegrationTests.GetPAT());
 
             var task = sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true");
             task.GetAwaiter().GetResult();
@@ -67,10 +64,10 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
             config.AdditionalFields.Add("Microsoft.VSTS.Common.Priority", "1");
 
-            var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), config);
+            var sut = new VstsClient(Settings.Url, IntegrationTests.GetPAT(), config);
 
             var task = sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true");
-            task.GetAwaiter().GetResult();;
+            task.GetAwaiter().GetResult(); ;
 
 
             var result = task.Result;
@@ -88,13 +85,13 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var settings = new VstsSettings();
             settings.AddEnvironment(Guid.NewGuid().ToString());
 
-            var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), settings);
+            var sut = new VstsClient(Settings.Url, IntegrationTests.GetPAT(), settings);
 
             // make sure on eitem exists
             sut.PutAsync($"Test-Flag-{Guid.NewGuid()}", "true").GetAwaiter().GetResult();
 
             var task = sut.GetAsync();
-            task.GetAwaiter().GetResult();;
+            task.GetAwaiter().GetResult(); ;
 
 
             var result = task.Result;
@@ -110,10 +107,10 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
             var settings = new VstsSettings { AdditionalQueryFilter = "and [System.Tags] Contains 'ThisWillNotExist'" };
 
-            var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), settings);
+            var sut = new VstsClient(Settings.Url, IntegrationTests.GetPAT(), settings);
 
             var task = sut.GetAsync();
-            task.GetAwaiter().GetResult();;
+            task.GetAwaiter().GetResult(); ;
 
 
             var result = task.Result;
@@ -122,7 +119,6 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
 
         }
 
-        [Ignore]
         [TestMethod]
         [TestCategory("Integration")]
         public void VstsClient_can_get_features_with_special_config()
@@ -134,10 +130,10 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
                 AdditionalQueryFilter = "and [System.Tags] Contains 'FeatureFlag' and [Microsoft.VSTS.Common.Priority] = 1"
             };
 
-            var sut = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), config);
+            var sut = new VstsClient(Settings.Url, IntegrationTests.GetPAT(), config);
 
             var task = sut.GetAsync();
-            task.GetAwaiter().GetResult();;
+            task.GetAwaiter().GetResult(); ;
 
 
             var result = task.Result;

@@ -1,12 +1,9 @@
 ﻿using FeatureSwitcher;
 using FeatureSwitcher.Configuration;
-using FeatureSwitcher.VstsConfiguration.Tests.Properties;
 using FluentAssertions;
 using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using System.Threading;
 
 namespace FeatureSwitcher.VstsConfiguration.Tests
 {
@@ -25,7 +22,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
                 .And
                 .ConfiguredBy
                 .VstsConfig()
-                .WithVSTSUrl(Settings.Default.Url)
+                .WithVSTSUrl(Settings.Url)
                 .WithPrivateAccessToken(IntegrationTests.GetPAT())
                 .WithEnvironment(environmentKey)
                 .PreloadedFeatures()
@@ -47,7 +44,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
             var testSettings = new VstsSettings();
             testSettings.AddEnvironment(environmentKey);
 
-            var testClient = new VstsClient(Settings.Default.Url, IntegrationTests.GetPAT(), testSettings);
+            var testClient = new VstsClient(Settings.Url, IntegrationTests.GetPAT(), testSettings);
             var task = testClient.PutAsync("Demo.DemoFeature", "True");
             task.GetAwaiter().GetResult();;
 
@@ -60,7 +57,7 @@ namespace FeatureSwitcher.VstsConfiguration.Tests
                 .And
                 .ConfiguredBy
                 .VstsConfig()
-                .WithVSTSUrl(Settings.Default.Url)
+                .WithVSTSUrl(Settings.Url)
                 .WithPrivateAccessToken(IntegrationTests.GetPAT())
                 .WithEnvironment(environmentKey)
                 .WithCacheTimeout(TimeSpan.FromMilliseconds(1))
